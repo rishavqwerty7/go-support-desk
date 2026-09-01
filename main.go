@@ -8,14 +8,17 @@ import (
 func main() {
 	fmt.Println("Hello world")
 
-	http.HandleFunc("/", handleRoutes)
-	http.HandleFunc("/home", handleHomeRoute)
+	http.HandleFunc("/health", healthHandler)
+	fmt.Println("Server running on port 8080")
+
+	err := http.ListenAndServe(":8080", nil)
+
+	if err != nil {
+		fmt.Println("Server running", err)
+	}
+
 }
 
-func handleRoutes(w http.ResponseWriter, r *http.Request) {
-	fmt.Print("Home routes")
-}
-
-func handleHomeRoute(w http.ResponseWriter, r *http.Request) {
-	fmt.Print("Home routes")
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Support Desk Api Healthy"))
 }
