@@ -20,6 +20,8 @@ func main() {
 
 }
 
+// A health endpoint is a small API endpoint that allows another system to ask your application whether it is working properly.
+
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Support Desk Api Healthy"))
 }
