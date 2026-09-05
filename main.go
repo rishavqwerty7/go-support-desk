@@ -2,22 +2,28 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+
+	"github.com/rishavqwerty7/go-support-desk/database"
 )
 
 // go desk main func
 func main() {
-	fmt.Println("Hello world")
+	err := database.ConnectMongoDB()
+
+	if err != nil {
+		log.Fatal("mongo db connection failed")
+	}
 
 	http.HandleFunc("/health", healthHandler)
 	fmt.Println("Server running on port 8080")
 
-	err := http.ListenAndServe(":8080", nil)
+	err = http.ListenAndServe(":8080", nil)
 
 	if err != nil {
-		fmt.Println("Server running", err)
+		log.Fatal("Server failed", err)
 	}
-
 }
 
 // A health endpoint is a small API endpoint that allows another system to ask your application whether it is working properly.
