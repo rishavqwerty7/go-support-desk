@@ -2,9 +2,9 @@ package repositories
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/rishavqwerty7/go-support-desk/models"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -25,8 +25,37 @@ func (repo *TicketRepository) Create(ctx context.Context,
 	return err
 }
 
-func (repo *TicketRepository) GetAll(ctx context.Context) 
-([]models.Ticket, error) {
+func (repo *TicketRepository) GetAll(
+	ctx context.Context,
+) ([]models.Ticket, error) {
 
-	fmt.Println("hi")
+	cursor, err := repo.collection.Find(ctx, bson.M{})
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer cursor.Close(ctx)
+
+	var tickets []models.Ticket
+
+	for cursor.Next(ctx) {
+
+		var ticket models.Ticket
+
+		err = cursor.Decode(&ticket)
+
+		if err != nil {
+			return nil, err
+		}
+
+		tickets = append(tickets, ticket)
+	}
+
+	if err := cursor.Err(); err != nil {
+		return nil, err
+	}
+
+	return tickets, nil
+
 }
