@@ -5,6 +5,7 @@ import (
 
 	"github.com/rishavqwerty7/go-support-desk/models"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -57,5 +58,37 @@ func (repo *TicketRepository) GetAll(
 	}
 
 	return tickets, nil
+
+}
+
+func (repo *TicketRepository) GetById(ctx context.Context,
+	id primitive.ObjectID) (*models.Ticket, error) {
+
+	var ticket models.Ticket
+
+	err := repo.collection.FindOne(ctx, bson.M{"_id": id}).Decode(&ticket)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &ticket, nil
+}
+
+func (repo *TicketRepository) Update(ctx context.Context,
+	id primitive.ObjectID,
+	update bson.M,
+) error {
+	_, err := repo.collection.UpdateOne(
+		ctx,
+		bson.M{"_id": id},
+		bson.M{"$set": update},
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 
 }
