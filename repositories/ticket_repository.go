@@ -92,3 +92,17 @@ func (repo *TicketRepository) Update(ctx context.Context,
 	return nil
 
 }
+
+func (repo *TicketRepository) Delete(ctx context.Context, id primitive.ObjectID) error {
+
+	_, err := repo.collection.DeleteOne(ctx, bson.M{
+		"_id": id,
+	})
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
