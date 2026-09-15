@@ -19,6 +19,12 @@ type Ticket struct {
 
 type CreateTicketRequest struct {
 	Title       string `json:"title"`
-	Description string `json:"description" bson:"description"`
-	Priority    string `json:"priority" bson:"priority"`
+	Description string `json:"description"`
+	Priority    string `json:"priority"`
+}
+
+type UpdateTicketRequest struct {
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Priority    string `json:"priority"`
 }
