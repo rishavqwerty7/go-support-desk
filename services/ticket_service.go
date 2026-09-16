@@ -62,7 +62,13 @@ func (service *TicketService) GetTicketById(ctx context.Context, id primitive.Ob
 	return ticket, nil
 }
 
-func (service *TicketService) UpdateTicket(ctx context.Context, id primitive.ObjectID, update bson.M) error {
+func (service *TicketService) UpdateTicket(ctx context.Context, id primitive.ObjectID, request models.UpdateTicketRequest) error {
+
+	update := bson.M{
+		"title":       request.Title,
+		"description": request.Description,
+		"priority":    request.Priority,
+	}
 
 	err := service.repository.Update(ctx, id, update)
 
@@ -72,4 +78,15 @@ func (service *TicketService) UpdateTicket(ctx context.Context, id primitive.Obj
 
 	return nil
 
+}
+
+func (service *TicketService) DeleteTicket(ctx context.Context, id primitive.ObjectID) error {
+
+	err := service.repository.Delete(ctx, id)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
