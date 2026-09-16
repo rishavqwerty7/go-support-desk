@@ -1,11 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/rishavqwerty7/go-support-desk/database"
+	"github.com/rishavqwerty7/go-support-desk/repositories"
+	"github.com/rishavqwerty7/go-support-desk/services"
 )
 
 // go desk main func
@@ -13,11 +14,14 @@ func main() {
 	err := database.ConnectMongoDB()
 
 	if err != nil {
-		log.Fatal("mongo db connection failed")
+		log.Fatal("Mongo DB Connection Failed")
 	}
 
-	http.HandleFunc("/health", healthHandler)
-	fmt.Println("Server running on port 8080")
+	collection := database.Client.Database("go_support_desk").Collection("tickets")
+
+	ticketRepository := repositories.NewTicketRepository(collection)
+
+	ticketService := services.NewTicketService(ticketRepository)
 
 	err = http.ListenAndServe(":8080", nil)
 
