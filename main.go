@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/rishavqwerty7/go-support-desk/database"
+	"github.com/rishavqwerty7/go-support-desk/handlers"
 	"github.com/rishavqwerty7/go-support-desk/repositories"
 	"github.com/rishavqwerty7/go-support-desk/services"
 )
@@ -22,6 +23,8 @@ func main() {
 	ticketRepository := repositories.NewTicketRepository(collection)
 
 	ticketService := services.NewTicketService(ticketRepository)
+
+	ticketHandler := handlers.NewTicketHandler(ticketService)
 
 	err = http.ListenAndServe(":8080", nil)
 
