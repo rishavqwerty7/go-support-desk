@@ -36,7 +36,7 @@ func (handler *TicketHandler) CreateHandler(w http.ResponseWriter, r *http.Reque
 
 	customerId := primitive.NewObjectID()
 	err = handler.service.CreateTicket(r.Context(), ticket, customerId)
-
+	//error handling
 	if err != nil {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
