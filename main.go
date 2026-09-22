@@ -26,6 +26,8 @@ func main() {
 
 	ticketHandler := handlers.NewTicketHandler(ticketService)
 
+	http.HandleFunc("/tickets", ticketHandler.TicketHandler)
+
 	err = http.ListenAndServe(":8080", nil)
 
 	if err != nil {
@@ -33,11 +35,11 @@ func main() {
 	}
 }
 
-// A health endpoint is a small API endpoint that allows another system to ask your application whether it is working properly.
-func healthHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Support Desk Api Healthy"))
-}
+// // A health endpoint is a small API endpoint that allows another system to ask your application whether it is working properly.
+// func healthHandler(w http.ResponseWriter, r *http.Request) {
+// 	w.Write([]byte("Support Desk Api Healthy"))
+// }
 
-func homeRouteHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Home route"))
-}
+// func homeRouteHandler(w http.ResponseWriter, r *http.Request) {
+// 	w.Write([]byte("Home route"))
+// }
