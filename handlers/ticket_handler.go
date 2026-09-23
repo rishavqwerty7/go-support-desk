@@ -117,3 +117,25 @@ func (handler *TicketHandler) GetTicketByIdHandler(w http.ResponseWriter, r *htt
 
 	json.NewEncoder(w).Encode(res)
 }
+
+func (handler *TicketHandler) UpdateTicket(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != http.MethodPatch {
+		http.Error(w, "Invalid method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	id := strings.TrimPrefix(r.URL.Path, "/tickets/")
+
+	objectId, err := primitive.ObjectIDFromHex(id)
+
+	if err != nil {
+		http.Error(w, "Invalid ticket id", http.StatusBadRequest)
+		return
+	}
+
+	var ticket models.UpdateTicketRequest
+
+	// err := handler.service.UpdateTicket(r.Context(), objectId, &ticket)
+
+}
