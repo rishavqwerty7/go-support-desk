@@ -27,6 +27,7 @@ func main() {
 	ticketHandler := handlers.NewTicketHandler(ticketService)
 
 	http.HandleFunc("/tickets", ticketHandler.TicketHandler)
+	http.HandleFunc("/tickets/", ticketHandler.TicketHandler)
 
 	err = http.ListenAndServe(":8080", nil)
 
