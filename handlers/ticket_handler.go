@@ -127,7 +127,7 @@ func (handler *TicketHandler) UpdateTicket(w http.ResponseWriter, r *http.Reques
 
 	id := strings.TrimPrefix(r.URL.Path, "/tickets/")
 
-	objectId, err := primitive.ObjectIDFromHex(id)
+	// objectId, err := primitive.ObjectIDFromHex(id)
 
 	if err != nil {
 		http.Error(w, "Invalid ticket id", http.StatusBadRequest)
