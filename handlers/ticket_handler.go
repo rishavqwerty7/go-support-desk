@@ -134,7 +134,7 @@ func (handler *TicketHandler) UpdateTicket(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	var ticket models.UpdateTicketRequest
+	//  var ticket models.UpdateTicketRequest
 
 	// err := handler.service.UpdateTicket(r.Context(), objectId, &ticket)
 
